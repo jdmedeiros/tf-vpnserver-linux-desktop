@@ -40,4 +40,4 @@ if ! (id "$USER" &>/dev/null); then
   useradd -m -p $(openssl passwd -1 $PASSWORD) $USER
 fi
 
-tar xvzf /tmp/certs/ovpn.tgz /tmp/certs/ovpn
+tar cvzf /tmp/certs/ovpn.tgz /tmp/certs/ovpn
