@@ -1,30 +1,25 @@
 variable "key_name" {
-  type = string
+  type    = string
   default = "vockey"
 }
 
 variable "volume_size" {
-  type = number
+  type    = number
   default = 30
 }
 
-variable "security_group_name" {
-  type = string
-  default = "VPN Server and Desktop Security Group"
-}
-
-variable "distro_ec2"{
-  type = bool
-  default = false
+variable "distro_ec2" {
+  type    = bool
+  default = true
 }
 
 variable "cloud-config-vpn" {
-  type = string
+  type    = string
   default = "cloud-config-vpn.sh"
 }
 
 variable "vpn_instance_ami" {
-  type = map
+  type = map(any)
 
   default = {
     ec2    = "ami-0022f774911c1d690"
@@ -60,8 +55,12 @@ variable "fw_rules" {
 
 variable "ip_list" {
   description = "Allowed IPs"
-  type = list(list(string))
+  type        = list(list(string))
   default = [
     ["128.65.243.205/32", "78.29.147.32/32", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"],
   ]
+}
+
+resource "random_id" "sg" {
+  byte_length = 8
 }

@@ -1,5 +1,6 @@
 #!/bin/bash -x
 if [ "$1" = "run" ]; then
+  LOGFILE="/var/log/cloud-config-"$(date +%s)
   SCRIPT_LOG_DETAIL="${LOGFILE}"_$(basename "$0").log
 
   # Reference: https://serverfault.com/questions/103501/how-can-i-fully-log-all-bash-scripts-actions

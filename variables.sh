@@ -1,7 +1,7 @@
 #!/usr/bin/bash -x
 
 if [ "$1" = "run" ];then
-  LOGFILE="/var/log/cloud-config-detail"
+  LOGFILE="/var/log/cloud-config-"$(date +%s)
   SCRIPT_LOG_DETAIL="${LOGFILE}"_$(basename "$0").log
 
   # Reference: https://serverfault.com/questions/103501/how-can-i-fully-log-all-bash-scripts-actions
@@ -10,8 +10,7 @@ if [ "$1" = "run" ];then
   exec 1>$SCRIPT_LOG_DETAIL 2>&1
 
   # If false then it will use Ubuntu
-  DISTRO_EC2=${distro_ec2}
-
+  DISTRO_EC2=true
   # User and password for the Desktop GUI user - look at the logfile to find out the password and change it after
   USER=luxuser
   PASSWORD=$(xxd -l8 -ps /dev/urandom)
