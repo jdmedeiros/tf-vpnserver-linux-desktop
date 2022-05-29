@@ -1,5 +1,5 @@
 # tf-vpnserver-linux-desktop
-Terraform create an OpenVPN server on EC2 or Ubuntu and install a GUI Desktop on that instance accessible through RDP.
+Terraform create an OpenVPN server on EC2 or Ubuntu and install a GUI Desktop on that instance accessible through RDP. Set ```DISTRO_EC2=true``` in ```variables.sh```and ```distro_ec2``` in ```variables.tf``` to true if your want an EC2 Linux based instance; set them to ```false```if you prefer Ubuntu.
 
 A simple way to create an Openvpn server and install a GUI on the same machine. The ideia is to allow using the machine as a gateway for an Openvpn client or use the RDP client to access the machine and navigate the Internet using the machine. To create the machine in a different region other than us-east-1 just change the variable in variables.tf 
 
