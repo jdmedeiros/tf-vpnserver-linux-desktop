@@ -5,4 +5,4 @@ A simple way to create an Openvpn server and install a GUI on the same machine. 
 
 Personalize the instance by configuring variables.tf and variables.sh
 
-You should have no need to change anything else.
+You should have no need to change anything else. After running ```terraform apply``` you can navigate to http://x.x.x.x:8888 to download the Openvpn config file and the generated certificates. [x.x.x.x is the elastic IP of the instance]
