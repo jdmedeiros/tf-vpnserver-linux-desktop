@@ -19,19 +19,19 @@ echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/10-ipv4_ip_forward.conf
 sysctl -w net.ipv4.ip_forward=1
 
 if [ "$CERTSRV" = "true" ]; then
-  cp "${CERTPATH}"/certs/ca.crt /tmp/certs/
+  cp "${CERTPATH}"/certs/ca.crt /tmp/certs/ovpn/
   cp "${CERTPATH}"/certs/ca.crt /etc/openvpn/
   cp "${CERTPATH}"/certs/amazonaws.com.crt /etc/openvpn/server.crt
   cp "${CERTPATH}"/private/amazonaws.com.key /etc/openvpn/server.key
-  cp "${CERTPATH}"/certs/client.amazonaws.com.crt /tmp/certs/client.crt
-  cp "${CERTPATH}"/private/client.amazonaws.com.key /tmp/certs/client.key
+  cp "${CERTPATH}"/certs/client.amazonaws.com.crt /tmp/certs/ovpn/client.crt
+  cp "${CERTPATH}"/private/client.amazonaws.com.key /tmp/certs/ovpn/client.key
 fi
 
-sed -i 's/^remote my-server-1/remote '$(curl -s curl http://169.254.169.254/latest/meta-data/public-ipv4)'/g' /tmp/certs/client.conf
-echo "auth SHA512" >> /tmp/certs/client.conf
+sed -i 's/^remote my-server-1/remote '$(curl -s curl http://169.254.169.254/latest/meta-data/public-ipv4)'/g' /tmp/certs/ovpn/client.conf
+echo "auth SHA512" >> /tmp/certs/ovpn/client.conf
 
 openvpn --genkey --secret /etc/openvpn/ta.key
-cp /etc/openvpn/ta.key /tmp/certs/
+cp /etc/openvpn/ta.key /tmp/certs/ovpn/
 openssl dhparam -out /etc/openvpn/dh2048.pem 2048
 systemctl enable --now openvpn@server
 systemctl enable --now xrdp
@@ -39,3 +39,5 @@ systemctl enable --now xrdp
 if ! (id "$USER" &>/dev/null); then
   useradd -m -p $(openssl passwd -1 $PASSWORD) $USER
 fi
+
+tar xvzf /tmp/certs/ovpn.tgz /tmp/certs/ovpn

@@ -8,9 +8,9 @@ if [ "$1" = "run" ]; then
   exec 1>"$SCRIPT_LOG_DETAIL" 2>&1
 
   if [ "$CERTSRV" = "true" ]; then
-    mkdir /tmp/certs
-    chmod -R +r /tmp/certs
-    cd /tmp/certs
+    mkdir -p /tmp/certs/ovpn
+    chmod -R +r /tmp/certs/
+    cd /tmp/certs/
     nohup python3 -m http.server $CERTSRVPORT  >/dev/null 2>&1 &
   fi
 
@@ -24,7 +24,7 @@ if [ "$1" = "run" ]; then
     amazon-linux-extras install -y libreoffice
     bash -c 'echo PREFERRED=/usr/bin/mate-session > /etc/sysconfig/desktop'
     cp /usr/share/doc/$(ls /usr/share/doc/ |grep '^openvpn')/sample/sample-config-files/server.conf /etc/openvpn
-    cp /usr/share/doc/$(ls /usr/share/doc/ |grep '^openvpn')/sample/sample-config-files/client.conf /tmp/certs/
+    cp /usr/share/doc/$(ls /usr/share/doc/ |grep '^openvpn')/sample/sample-config-files/client.conf /tmp/certs/ovpn/
 
     # Do not indent the following block
 cat <<'EOF' > /etc/firewalld/services/rdp.xml
@@ -52,7 +52,7 @@ EOF
     apt-get -o DPkg::Options::=--force-confdef install -y build-essential netfilter-persistent iptables-persistent ubuntu-desktop chromium-browser filezilla libreoffice openvpn easy-rsa xrdp gkrellm
     adduser xrdp ssl-cert
     cp /usr/share/doc/$(ls /usr/share/doc/ |grep '^openvpn')/examples/sample-config-files/server.conf /etc/openvpn
-    cp /usr/share/doc/$(ls /usr/share/doc/ |grep '^openvpn')/examples/sample-config-files/client.conf /tmp/certs/
+    cp /usr/share/doc/$(ls /usr/share/doc/ |grep '^openvpn')/examples/sample-config-files/client.conf /tmp/certs/ovpn/
     iptables -t nat -A POSTROUTING -o $(basename /sys/class/net/en*) -j MASQUERADE
     netfilter-persistent save
   fi
