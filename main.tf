@@ -16,7 +16,7 @@ resource "aws_instance" "vpn" {
 }
 
 resource "aws_eip" "vpn_eip" {
-  domain = vpc
+  vpc = domain
 }
 
 resource "aws_eip_association" "vpn_eip_assoc" {
