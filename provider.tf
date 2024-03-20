@@ -14,7 +14,7 @@ terraform {
 
 provider "aws" {
   region  = "us-east-1"
-  profile = "vocareum"
+  #profile = "vocareum"
 }
 
 provider "cloudinit" {
