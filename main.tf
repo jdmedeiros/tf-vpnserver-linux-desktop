@@ -12,6 +12,8 @@ resource "aws_instance" "vpn" {
   }
   user_data = data.template_cloudinit_config.config-vpn.rendered
 
+  vpc_security_group_ids = [aws_security_group.instance.id]
+
   source_dest_check = false
 }
 
